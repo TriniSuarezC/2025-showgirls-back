@@ -14,9 +14,17 @@ datasource db {
 }
 
 model Gasto {
-  id           Int      @id @default(autoincrement())
-  usuarioId    String
-  gasto        Float
+  id            Int      @id @default(autoincrement())
+  usuarioId     String
+  gasto         Float
   montoAnterior Float
-  fecha        DateTime
+  fecha         DateTime
+}
+
+model Ingreso {
+  id            Int      @id @default(autoincrement())
+  usuarioId     String
+  ingreso       Float
+  montoAnterior Float
+  fecha         DateTime
 }
