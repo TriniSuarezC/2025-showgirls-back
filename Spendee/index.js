@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 // Ruta protegida para crear un gasto
-app.post("/gasto", validarJWT, async (req, res) => {
+app.post("/gasto", async (req, res) => {
   const { userId, gasto, montoAnterior } = req.body;
   try {
     const nuevoGasto = await prisma.gasto.create({
