@@ -51,8 +51,10 @@ app.get("/gasto", async (req, res) => {
   res.json(gastos);
 });
 
-app.post("/ingreso", validarJWT, async (req, res) => {
+app.post("/ingreso", async (req, res) => {
+  console.log("Llegue al backend");
   const { userId, ingreso, montoAnterior } = req.body;
+  console.log(userId);
   try {
     const nuevoIngreso = await prisma.ingreso.create({
       data: {
@@ -63,6 +65,7 @@ app.post("/ingreso", validarJWT, async (req, res) => {
       },
     });
     res.status(201).json(nuevoIngreso);
+    console.log(userId);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
