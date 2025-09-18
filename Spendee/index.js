@@ -77,6 +77,27 @@ app.get("/ingreso", async (req, res) => {
   res.json(ingresos);
 });
 
+app.get("/balance/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const gastos = await prisma.gasto.findMany({
+      where: { usuarioId: userId },
+    });
+    const sumaGastos = gastos.reduce((total, gasto) => total + gasto.gasto, 0);
+    const ingresos = await prisma.ingreso.findMany({
+      where: { usuarioId: userId },
+    });
+    const sumaIngresos = ingresos.reduce(
+      (total, ingreso) => total + ingreso.ingreso,
+      0
+    );
+    const balance = sumaIngresos - sumaGastos;
+    res.json({ balance, sumaIngresos, sumaGastos });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
