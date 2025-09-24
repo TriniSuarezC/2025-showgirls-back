@@ -1,14 +1,14 @@
-const request = require("supertest");
-const app = require("../index");
-const { PrismaClient } = require("@prisma/client");
-
 jest.mock("@prisma/client", () => {
   const mPrisma = {
-    gasto: { findMany: jest.fn() },
+    gasto: { findMany: jest.fn(), create: jest.fn() },
     ingreso: { findMany: jest.fn(), create: jest.fn() },
   };
   return { PrismaClient: jest.fn(() => mPrisma) };
 });
+
+const request = require("supertest");
+const app = require("../index");
+const { PrismaClient } = require("@prisma/client");
 
 describe("GET /", () => {
   it("Cuando se ingresa a la ruta basica, debe aparecer un mensaje de bienvenida", async () => {
@@ -161,5 +161,59 @@ describe("GET /balance/userId", () => {
     const res = await request(app).get("/balance/0");
     expect(res.statusCode).toBe(200);
     expect(res.body.balance).toEqual(100);
+  });
+});
+
+describe("POST /ingreso", () => {
+  let prisma;
+  beforeEach(() => {
+    prisma = new PrismaClient();
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it("Cuando se crea un ingreso, debe devolver el ingreso creado", async () => {
+    const nuevoIngreso = {
+      id: 1,
+      usuarioId: 1,
+      ingreso: 150,
+      montoAnterior: 100,
+      fecha: String(new Date()),
+    };
+    prisma.ingreso.create.mockResolvedValue(nuevoIngreso);
+    const res = await request(app).post("/ingreso").send({
+      userId: 1,
+      ingreso: 150,
+      montoAnterior: 100,
+    });
+    expect(res.statusCode).toBe(201);
+    expect(res.body).toEqual(nuevoIngreso);
+  });
+});
+
+describe("POST /gasto", () => {
+  let prisma;
+  beforeEach(() => {
+    prisma = new PrismaClient();
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it("Cuando se crea un gasto, debe devolver el gasto creado", async () => {
+    const nuevoGasto = {
+      id: 1,
+      usuarioId: 1,
+      gasto: 80,
+      montoAnterior: 200,
+      fecha: String(new Date()),
+    };
+    prisma.gasto.create.mockResolvedValue(nuevoGasto);
+    const res = await request(app).post("/gasto").send({
+      userId: 1,
+      gasto: 80,
+      montoAnterior: 200,
+    });
+    expect(res.statusCode).toBe(201);
+    expect(res.body).toEqual(nuevoGasto);
   });
 });
