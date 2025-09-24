@@ -24,7 +24,7 @@ function validarJWT(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-  res.send("API de Gestión de Gastos");
+  res.send("API de Gestion de Gastos");
 });
 
 // Ruta protegida para crear un gasto
