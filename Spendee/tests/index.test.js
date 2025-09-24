@@ -189,6 +189,24 @@ describe("POST /ingreso", () => {
     expect(res.statusCode).toBe(201);
     expect(res.body).toEqual(nuevoIngreso);
   });
+  it("cuando hay un error en prisma, me devuelve un codigo de error 400", async () => {
+    prisma.ingreso.create.mockRejectedValue(new Error("DB error"));
+    const res = await request(app).post("/ingreso").send({
+      userId: 1,
+      ingreso: 150,
+      montoAnterior: 100,
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toEqual({ error: "DB error" });
+  });
+  it("cuando falta un campo obligatorio, me devuelve un codigo de error 400", async () => {
+    const res = await request(app).post("/ingreso").send({
+      // userId y ingreso faltan
+      montoAnterior: 100,
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toHaveProperty("error");
+  });
 });
 
 describe("POST /gasto", () => {
