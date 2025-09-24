@@ -213,10 +213,19 @@ describe("POST /ingreso", () => {
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty("error");
   });
-  it("cuando el ingreso no es un numero, me devuelve un codigo de error 400", async () => {
+  it("cuando el ingreso es un string, me devuelve un codigo de error 400", async () => {
     const res = await request(app).post("/ingreso").send({
       userId: 1,
       ingreso: "cien",
+      montoAnterior: 100,
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toHaveProperty("error");
+  });
+  it("cuando el ingreso es null, me devuelve un codigo de error 400", async () => {
+    const res = await request(app).post("/ingreso").send({
+      userId: 1,
+      ingreso: null,
       montoAnterior: 100,
     });
     expect(res.statusCode).toBe(400);
@@ -270,10 +279,19 @@ describe("POST /gasto", () => {
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty("error");
   });
-  it("cuando el gasto no es un numero, me devuelve un codigo de error 400", async () => {
+  it("cuando el gasto es un string, me devuelve un codigo de error 400", async () => {
     const res = await request(app).post("/gasto").send({
       userId: 1,
       gasto: "cien",
+      montoAnterior: 100,
+    });
+    expect(res.statusCode).toBe(400);
+    expect(res.body).toHaveProperty("error");
+  });
+  it("cuando el gasto es null, me devuelve un codigo de error 400", async () => {
+    const res = await request(app).post("/gasto").send({
+      userId: 1,
+      gasto: null,
       montoAnterior: 100,
     });
     expect(res.statusCode).toBe(400);
