@@ -24,7 +24,7 @@ function validarJWT(req, res, next) {
 }
 
 app.get("/", (req, res) => {
-  res.send("API de Gestión de Gastos");
+  res.send("API de Gestion de Gastos");
 });
 
 // Ruta protegida para crear un gasto
@@ -52,7 +52,6 @@ app.get("/gasto", async (req, res) => {
 });
 
 app.post("/ingreso", async (req, res) => {
-  console.log("Llegue al backend");
   const { userId, ingreso, montoAnterior } = req.body;
   console.log(userId);
   try {
@@ -100,6 +99,7 @@ app.get("/balance/:userId", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+  console.log(typeof 99.99);
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 

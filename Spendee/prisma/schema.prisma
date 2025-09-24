@@ -24,7 +24,7 @@ model Gasto {
 model Ingreso {
   id            Int      @id @default(autoincrement())
   usuarioId     String
-  ingreso       Float
+  ingreso       Decimal
   montoAnterior Float
   fecha         DateTime
 }
