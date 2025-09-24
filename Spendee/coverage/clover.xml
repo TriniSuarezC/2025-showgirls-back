@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1758748027032" clover="3.2.0">
-  <project timestamp="1758748027033" name="All files">
+<coverage generated="1758750563885" clover="3.2.0">
+  <project timestamp="1758750563885" name="All files">
     <metrics statements="53" coveredstatements="43" conditionals="6" coveredconditionals="2" methods="10" coveredmethods="9" elements="69" coveredelements="54" complexity="0" loc="53" ncloc="53" packages="1" files="1" classes="1"/>
     <file name="index.js" path="C:\Users\trini\spendee\2025-showgirls-back\Spendee\index.js">
       <metrics statements="53" coveredstatements="43" conditionals="6" coveredconditionals="2" methods="10" coveredmethods="9"/>
@@ -22,36 +22,36 @@
       <line num="26" count="1" type="stmt"/>
       <line num="27" count="1" type="stmt"/>
       <line num="31" count="1" type="stmt"/>
-      <line num="32" count="3" type="stmt"/>
-      <line num="33" count="3" type="stmt"/>
-      <line num="34" count="3" type="stmt"/>
+      <line num="32" count="4" type="stmt"/>
+      <line num="33" count="4" type="stmt"/>
+      <line num="34" count="4" type="stmt"/>
       <line num="42" count="1" type="stmt"/>
-      <line num="44" count="2" type="stmt"/>
+      <line num="44" count="3" type="stmt"/>
       <line num="49" count="1" type="stmt"/>
       <line num="50" count="2" type="stmt"/>
       <line num="51" count="2" type="stmt"/>
       <line num="54" count="1" type="stmt"/>
-      <line num="55" count="3" type="stmt"/>
-      <line num="56" count="3" type="stmt"/>
-      <line num="57" count="3" type="stmt"/>
-      <line num="58" count="3" type="stmt"/>
-      <line num="59" count="3" type="stmt"/>
+      <line num="55" count="4" type="stmt"/>
+      <line num="56" count="4" type="stmt"/>
+      <line num="57" count="4" type="stmt"/>
+      <line num="58" count="4" type="stmt"/>
+      <line num="59" count="4" type="stmt"/>
       <line num="67" count="1" type="stmt"/>
       <line num="68" count="1" type="stmt"/>
-      <line num="70" count="2" type="stmt"/>
+      <line num="70" count="3" type="stmt"/>
       <line num="75" count="1" type="stmt"/>
       <line num="76" count="2" type="stmt"/>
       <line num="77" count="2" type="stmt"/>
       <line num="80" count="1" type="stmt"/>
-      <line num="81" count="4" type="stmt"/>
-      <line num="82" count="4" type="stmt"/>
-      <line num="83" count="4" type="stmt"/>
-      <line num="86" count="4" type="stmt"/>
-      <line num="87" count="4" type="stmt"/>
-      <line num="90" count="4" type="stmt"/>
+      <line num="81" count="5" type="stmt"/>
+      <line num="82" count="5" type="stmt"/>
+      <line num="83" count="5" type="stmt"/>
+      <line num="86" count="5" type="stmt"/>
+      <line num="87" count="5" type="stmt"/>
+      <line num="90" count="5" type="stmt"/>
       <line num="91" count="2" type="stmt"/>
-      <line num="94" count="4" type="stmt"/>
-      <line num="95" count="4" type="stmt"/>
+      <line num="94" count="5" type="stmt"/>
+      <line num="95" count="5" type="stmt"/>
       <line num="97" count="0" type="stmt"/>
       <line num="101" count="1" type="cond" truecount="2" falsecount="0"/>
       <line num="102" count="1" type="stmt"/>
