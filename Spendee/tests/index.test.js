@@ -1,4 +1,4 @@
-jest.mock("@prisma/client", () => {
+jest.mock('@prisma/client', () => {
   const mPrisma = {
     gasto: { findMany: jest.fn(), create: jest.fn() },
     ingreso: { findMany: jest.fn(), create: jest.fn() },
@@ -6,9 +6,9 @@ jest.mock("@prisma/client", () => {
   return { PrismaClient: jest.fn(() => mPrisma) };
 });
 
-const request = require("supertest");
-const app = require("../index");
-const { PrismaClient } = require("@prisma/client");
+import request from 'supertest';
+import app from '../index.js';
+import { PrismaClient } from '@prisma/client';
 
 describe("GET /", () => {
   it("Cuando se ingresa a la ruta basica, debe aparecer un mensaje de bienvenida", async () => {

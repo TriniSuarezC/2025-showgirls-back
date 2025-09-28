@@ -1,18 +1,30 @@
-import express from "express"
-import { PrismaClient } from "@prisma/client"
-import { validateToken } from "./middleware/validateToken.js"
-const app = express()
-const prisma = new PrismaClient()
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
+import { validateToken } from './middleware/validateToken.js';
 
-app.use(express.json())
+const app = express();
+const prisma = new PrismaClient();
+
+app.use(express.json());
+
+
+// JWT validation moved to middleware/validateToken.js
 
 app.get("/", (req, res) => {
-  res.send("API de Gestion de Gastos")
-})
+  res.send("API de Gestión de Gastos");
+});
+
+// Endpoint de prueba para debug del JWT
+app.get("/test-jwt", validateToken, (req, res) => {
+  res.json({
+    message: "JWT válido!",
+    usuario: req.usuario
+  });
+});
 
 // Ruta protegida para crear un gasto
-app.post("/gasto", async (req, res) => {
-  const { userId, gasto, montoAnterior } = req.body
+app.post("/gasto", validateToken, async (req, res) => {
+  const { userId, gasto, montoAnterior } = req.body;
   try {
     const nuevoGasto = await prisma.gasto.create({
       data: {
@@ -29,13 +41,13 @@ app.post("/gasto", async (req, res) => {
 })
 
 // Ruta para obtener todos los gastos
-app.get("/gasto", async (req, res) => {
-  const gastos = await prisma.gasto.findMany()
-  res.json(gastos)
-})
+app.get("/gasto", validateToken, async (req, res) => {
+  const gastos = await prisma.gasto.findMany();
+  res.json(gastos);
+});
 
-app.post("/ingreso", async (req, res) => {
-  const { userId, ingreso, montoAnterior } = req.body
+app.post("/ingreso", validateToken, async (req, res) => {
+  const { userId, ingreso, montoAnterior } = req.body;
   try {
     const nuevoIngreso = await prisma.ingreso.create({
       data: {
@@ -44,21 +56,21 @@ app.post("/ingreso", async (req, res) => {
         montoAnterior,
         fecha: new Date(),
       },
-    })
-    res.status(201).json(nuevoIngreso)
+    });
+    res.status(201).json(nuevoIngreso);
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 })
 
 // Ruta para obtener todos los ingresos
-app.get("/ingreso", async (req, res) => {
-  const ingresos = await prisma.ingreso.findMany()
-  res.json(ingresos)
-})
+app.get("/ingreso", validateToken, async (req, res) => {
+  const ingresos = await prisma.ingreso.findMany();
+  res.json(ingresos);
+});
 
-app.get("/balance/:userId", async (req, res) => {
-  const { userId } = req.params
+app.get("/balance/:userId", validateToken, async (req, res) => {
+  const { userId } = req.params;
   try {
     const gastos = await prisma.gasto.findMany({
       where: { usuarioId: userId },
@@ -76,11 +88,11 @@ app.get("/balance/:userId", async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
-})
+});
 
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`)
-})
+app.get("/categories", validateToken, async (req, res) => {
+  const categories = await prisma.categoria.findMany();
+  res.json(categories);
+});
 
 export default app
