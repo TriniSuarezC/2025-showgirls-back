@@ -2,10 +2,17 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import { validateToken } from "../middleware/validateToken.js";
 
+const serverless = require("serverless-http");
+const express = require("express");
+
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
+
+app.get("/api/hello", (req, res) => {
+  res.send("Hello from Express on Vercel!");
+});
 
 // JWT validation moved to middleware/validateToken.js
 
@@ -139,4 +146,4 @@ app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-export default app;
+module.exports = serverless(app);
