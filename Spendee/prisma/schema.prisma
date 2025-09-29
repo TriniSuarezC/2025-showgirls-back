@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Gasto {
-  id            Int      @id @default(autoincrement())
+  id            Int                @id @default(autoincrement())
   usuarioId     String
   gasto         Float
   montoAnterior Float
@@ -32,19 +32,19 @@ model Ingreso {
 }
 
 model CategoriasDefault {
-  id           Int    @id @default(autoincrement())
-  categoria    String
-  icono        String
-  color        String
-  descripcion  String
-  gastos       Gasto[]
+  id          Int     @id @default(autoincrement())
+  categoria   String
+  icono       String
+  color       String
+  descripcion String
+  gastos      Gasto[]
 }
 
 model customCategories {
-  id           Int    @id @default(autoincrement())
-  usuarioId    String
-  categoria    String
-  icono        String
-  color        String
-  descripcion  String
+  id          Int    @id @default(autoincrement())
+  usuarioId   String
+  categoria   String
+  icono       String
+  color       String
+  descripcion String
 }
