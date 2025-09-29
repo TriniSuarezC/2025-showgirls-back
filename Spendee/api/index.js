@@ -1,5 +1,5 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "./prisma.js";
 import { validateToken } from "../middleware/validateToken.js";
 
 const serverless = require("serverless-http");
