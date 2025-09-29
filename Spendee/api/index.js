@@ -1,12 +1,11 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { validateToken } from './middleware/validateToken.js';
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import { validateToken } from "../middleware/validateToken.js";
 
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(express.json());
-
 
 // JWT validation moved to middleware/validateToken.js
 
@@ -18,7 +17,7 @@ app.get("/", (req, res) => {
 app.get("/test-jwt", validateToken, (req, res) => {
   res.json({
     message: "JWT válido!",
-    usuario: req.usuario
+    usuario: req.usuario,
   });
 });
 
@@ -33,12 +32,12 @@ app.post("/gasto", validateToken, async (req, res) => {
         montoAnterior,
         fecha: new Date(),
       },
-    })
-    res.status(201).json(nuevoGasto)
+    });
+    res.status(201).json(nuevoGasto);
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
-})
+});
 
 // Ruta para obtener todos los gastos
 app.get("/gasto", validateToken, async (req, res) => {
@@ -59,9 +58,9 @@ app.post("/ingreso", validateToken, async (req, res) => {
     });
     res.status(201).json(nuevoIngreso);
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
-})
+});
 
 // Ruta para obtener todos los ingresos
 app.get("/ingreso", validateToken, async (req, res) => {
@@ -74,19 +73,19 @@ app.get("/balance/:userId", validateToken, async (req, res) => {
   try {
     const gastos = await prisma.gasto.findMany({
       where: { usuarioId: userId },
-    })
-    const sumaGastos = gastos.reduce((total, gasto) => total + gasto.gasto, 0)
+    });
+    const sumaGastos = gastos.reduce((total, gasto) => total + gasto.gasto, 0);
     const ingresos = await prisma.ingreso.findMany({
       where: { usuarioId: userId },
-    })
+    });
     const sumaIngresos = ingresos.reduce(
       (total, ingreso) => total + ingreso.ingreso,
       0
-    )
-    const balance = sumaIngresos - sumaGastos
-    res.json({ balance, sumaIngresos, sumaGastos })
+    );
+    const balance = sumaIngresos - sumaGastos;
+    res.json({ balance, sumaIngresos, sumaGastos });
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -96,7 +95,7 @@ app.get("/categories", async (req, res) => {
 });
 
 app.post("/customCategory", validateToken, async (req, res) => {
-  const {nombre, icono, color, descripcion } = req.body;
+  const { nombre, icono, color, descripcion } = req.body;
   try {
     const nuevaCategoria = await prisma.customCategories.create({
       data: {
@@ -108,7 +107,7 @@ app.post("/customCategory", validateToken, async (req, res) => {
     });
     res.status(201).json(nuevaCategoria);
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -135,4 +134,9 @@ app.post("/gastosPorCategoria", validateToken, async (req, res) => {
   }
 });
 
-export default app
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
+
+export default app;
