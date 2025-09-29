@@ -28,3 +28,11 @@ model Ingreso {
   montoAnterior Float
   fecha         DateTime
 }
+
+model CategoriasDefault {
+  id           Int    @id @default(autoincrement())
+  categoria    String
+  icono        String
+  color        String
+  descripcion  String
+}
