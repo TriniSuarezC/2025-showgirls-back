@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { validateToken } from "../middleware/validateToken.js";
 
 const serverless = require("serverless-http");
-const express = require("express");
 
 const app = express();
 const prisma = new PrismaClient();
@@ -141,10 +140,4 @@ app.post("/gastosPorCategoria", validateToken, async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
-
 export const handler = serverless(app);
-export default app;
