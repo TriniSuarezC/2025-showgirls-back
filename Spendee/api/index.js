@@ -146,4 +146,5 @@ app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-module.exports = serverless(app);
+export const handler = serverless(app);
+export default app;
