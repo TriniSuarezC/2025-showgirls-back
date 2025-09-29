@@ -90,9 +90,49 @@ app.get("/balance/:userId", validateToken, async (req, res) => {
   }
 });
 
-app.get("/categories", validateToken, async (req, res) => {
-  const categories = await prisma.categoria.findMany();
+app.get("/categories", async (req, res) => {
+  const categories = await prisma.CategoriasDefault.findMany();
   res.json(categories);
+});
+
+app.post("/customCategory", validateToken, async (req, res) => {
+  const {nombre, icono, color, descripcion } = req.body;
+  try {
+    const nuevaCategoria = await prisma.customCategories.create({
+      data: {
+        nombre,
+        icono,
+        color,
+        descripcion,
+      },
+    });
+    res.status(201).json(nuevaCategoria);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Ruta para obtener todas las categorías personalizadas
+app.get("/customCategories", validateToken, async (req, res) => {
+  const categorias = await prisma.customCategories.findMany();
+  res.json(categorias);
+});
+
+//ruta para obtener todos los gastos de un usuario por categoría
+//recibe user y categoryId por query params
+app.post("/gastosPorCategoria", validateToken, async (req, res) => {
+  const { userId, categoryId } = req.body;
+  try {
+    const gastos = await prisma.gasto.findMany({
+      where: {
+        usuarioId: userId,
+        categoriaId: parseInt(categoryId),
+      },
+    });
+    res.json(gastos);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 export default app
