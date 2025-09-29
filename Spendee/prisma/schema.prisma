@@ -19,6 +19,8 @@ model Gasto {
   gasto         Float
   montoAnterior Float
   fecha         DateTime
+  categoriaId   Int?
+  categoria     CategoriasDefault? @relation(fields: [categoriaId], references: [id])
 }
 
 model Ingreso {
@@ -31,6 +33,16 @@ model Ingreso {
 
 model CategoriasDefault {
   id           Int    @id @default(autoincrement())
+  categoria    String
+  icono        String
+  color        String
+  descripcion  String
+  gastos       Gasto[]
+}
+
+model customCategories {
+  id           Int    @id @default(autoincrement())
+  usuarioId    String
   categoria    String
   icono        String
   color        String
